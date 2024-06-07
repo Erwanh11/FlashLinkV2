@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 const Register = ({ history }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+    
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/users/register', { name, email, password });
-      history.push('/login');
+      const response = await axios.post('http://localhost:5010/api/users/register', { name, email, password });
+      if (response && response.data) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/login');
+      } else {
+        console.error('No response data');
+      }
     } catch (error) {
-      console.error(error.response.data.message);
+      console.error('Error:', error.response ? error.response.data.message : error.message);
     }
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <input
@@ -40,4 +50,5 @@ const Register = ({ history }) => {
     </form>
   );
 };
+
 export default Register;

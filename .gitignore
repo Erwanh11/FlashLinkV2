@@ -63,3 +63,7 @@ coverage/
 
 # dotenv environment variables file
 .env
+
+Dockerfile
+docker-compose.yml
+

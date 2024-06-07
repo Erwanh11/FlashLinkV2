@@ -56,16 +56,30 @@ exports.updateTask = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 exports.deleteTask = async (req, res) => {
-  const { id } = req.params;
   try {
-    const task = await Task.findById(id);
+    console.log(`Request to delete task with id: ${req.params.id}`);
+    
+    // Trouver la tâche
+    const task = await Task.findById(req.params.id);
     if (!task) {
+      console.log('Task not found');
       return res.status(404).json({ message: 'Task not found' });
     }
+
+    // Vérifier si l'utilisateur est autorisé
+    if (task.user.toString() !== req.user.id) {
+      console.log('Not authorized to delete this task');
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    // Supprimer la tâche
     await task.remove();
+    console.log('Task removed successfully');
     res.json({ message: 'Task removed' });
   } catch (error) {
+    console.error('Server error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };

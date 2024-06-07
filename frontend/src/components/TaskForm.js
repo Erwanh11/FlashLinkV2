@@ -8,7 +8,7 @@ const TaskForm = ({ fetchTasks }) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('/api/tasks', { title, description, priority }, {
+      await axios.post('http://localhost:5010/api/tasks', { title, description, priority }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchTasks();

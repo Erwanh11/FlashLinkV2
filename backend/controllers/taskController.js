@@ -1,5 +1,12 @@
 const nodemailer = require('nodemailer');
 const Task = require('../models/Task');
+
+/**
+ * @desc Get all tasks for a user
+ * @route GET /api/tasks
+ * @access Private
+ */
+
 exports.getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id });
@@ -15,6 +22,12 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
+
+/**
+ * @desc Create a new task
+ * @route POST /api/tasks
+ * @access Private
+ */
 exports.createTask = async (req, res) => {
   const { title, description, priority } = req.body;
   try {

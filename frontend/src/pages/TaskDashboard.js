@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import "../App.css";
 
 const TaskDashboard = () => {
@@ -13,6 +14,7 @@ const TaskDashboard = () => {
   const [newPriority, setNewPriority] = useState('medium');
   const [searchName, setSearchName] = useState('');
   const [searchPriority, setSearchPriority] = useState('');
+    const navigate = useNavigate();
 
   const fetchTasks = async () => {
     try {
@@ -82,6 +84,11 @@ const TaskDashboard = () => {
     }
   };
 
+    const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -98,8 +105,7 @@ const TaskDashboard = () => {
       <div className="header">
         <h1>FlashLink Dashboard</h1>
         <div className="header-buttons">
-          <button className="add-task-button">Ajouter une tâche</button>
-          <button className="logout-button">Déconnexion</button>
+          <button className="logout-button" onClick={handleLogout}>Déconnexion</button>
         </div>
       </div>
       <div className="search-bar">
@@ -137,7 +143,7 @@ const TaskDashboard = () => {
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </select>
-        <button type="submit">Add Task</button>
+        <button type="submit"> + Tâche </button>
       </form>
       <div className="task-container">
         {filteredTasks.map(task => (
@@ -168,7 +174,7 @@ const TaskDashboard = () => {
             <option value="medium">Medium</option>
             <option value="high">High</option>
           </select>
-          <button type="submit">Update Task</button>
+          <button type="submit"> Validez Modification </button>
         </form>
       )}
     </div>

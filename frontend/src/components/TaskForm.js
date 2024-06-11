@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
+/**
+ * TaskForm component
+ * @desc Form to create a new task
+ * @param {function} fetchTasks - Function to fetch tasks after creation
+ */
+
 const TaskForm = ({ fetchTasks }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

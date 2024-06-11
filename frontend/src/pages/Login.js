@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import "./login.css"
+import "./login.css";
 
-const Login = ({ history }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,10 +16,11 @@ const Login = ({ history }) => {
       localStorage.setItem('token', data.token);
       navigate('/tasks');
     } catch (error) {
-      console.error(error.response.data.message);
+      setError('Invalid email or password');
     }
-    
-return (
+  };
+
+  return (
     <div className="login-container">
       <div className="login-box">
         <h1>FlashLink</h1>
